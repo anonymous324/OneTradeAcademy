@@ -1,42 +1,57 @@
-# One Trade Academy
+# 📊 One Trade Academy — Dashboard Overview
 
-One Trade Academy is a modern web platform focused on **trading education and market learning**, covering Indian markets such as **Stock Market, NIFTY, and BANKNIFTY**.  
-The platform is designed to help learners understand trading concepts, strategies, and market behavior in a simple and structured way.
+**One Trade Academy** is a modern web platform dedicated to **trading education and market learning**, focused on Indian markets such as **Stock Market, NIFTY, and BANKNIFTY**.  
+It is built to help traders learn concepts, strategies, and market behavior in a **clear, structured, and disciplined way**.
 
-🌐 Live: https://one-trade-academy.vercel.app/
-
----
-
-## 📌 Overview
-
-One Trade Academy aims to educate beginners and intermediate traders by providing:
-- Clear trading concepts
-- Market-focused learning (Indian indices)
-- A clean, responsive, and fast web experience
-
-The project is deployed on **Vercel** and follows a modern frontend-first approach.
+🌐 **Live Platform:** https://one-trade-academy.vercel.app/
 
 ---
 
-## 🎯 Key Features
+## 🧭 Dashboard Summary
 
-- 📈 Focus on Indian markets (Stock Market, NIFTY, BANKNIFTY)
-- 📚 Educational content for traders
-- 💻 Fully responsive UI (mobile, tablet, desktop)
-- ⚡ Fast loading and SEO-friendly
-- 🎨 Clean and minimal design
-- ☁️ Cloud deployment with Vercel
-
----
-
-## 🛠 Tech Stack
-
-- **Frontend:** React / Next.js  
-- **Styling:** Tailwind CSS / CSS  
-- **Deployment:** Vercel  
-- **Version Control:** Git  
+| Module | Description |
+|------|-------------|
+| 🎓 Purpose | Trading education & market awareness |
+| 📍 Market Focus | Indian Stock Market, NIFTY, BANKNIFTY |
+| 💻 Platform | Web-based (Responsive) |
+| ☁️ Hosting | Vercel |
+| 🎯 Target Users | Beginners & Intermediate Traders |
 
 ---
 
-## 📂 Project Structure
+## 📌 Platform Overview
+
+**One Trade Academy** is designed to:
+- Simplify trading education
+- Focus on real Indian market behavior
+- Provide a clean and distraction-free learning interface
+- Deliver fast and SEO-friendly performance
+
+---
+
+## 🎯 Core Features Dashboard
+
+| Feature | Status |
+|------|--------|
+| 📈 Indian Market Focus | ✅ Enabled |
+| 📚 Educational Content | ✅ Available |
+| 📱 Mobile Responsiveness | ✅ Supported |
+| ⚡ Fast Performance | ✅ Optimized |
+| 🎨 Clean UI Design | ✅ Implemented |
+| ☁️ Cloud Deployment | ✅ Vercel |
+
+---
+
+## 🛠 Technology Stack Dashboard
+
+| Layer | Technology |
+|-----|------------|
+| Frontend | React / Next.js |
+| Styling | Tailwind CSS / CSS |
+| Deployment | Vercel |
+| Version Control | Git |
+
+---
+
+## 📂 Project Structure (System View)
 

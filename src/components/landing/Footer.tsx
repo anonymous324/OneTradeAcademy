@@ -99,24 +99,13 @@ const Footer = () => {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="https://t.me/onetradeacademy"
+                    href="https://t.me/one_tradeacademy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                   >
                     <Send className="w-4 h-4" />
                     Telegram Community
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://wa.me/919999999999"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    WhatsApp Support
                   </a>
                 </li>
               </ul>

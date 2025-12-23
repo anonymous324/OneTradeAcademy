@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 type Plan = {
   title: string;
@@ -95,6 +95,17 @@ const MembershipPlans: React.FC = () => {
     experience: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [dotCount, setDotCount] = useState(0);
+
+  useEffect(() => {
+    if (!loading) return;
+    const interval = setInterval(() => {
+      setDotCount((prev) => (prev + 1) % 4);
+    }, 500);
+    return () => clearInterval(interval);
+  }, [loading]);
+
   const openModal = (serviceName: string) => {
     setService(serviceName);
     setOpen(true);
@@ -109,6 +120,7 @@ const MembershipPlans: React.FC = () => {
       capital: "",
       experience: "",
     });
+    setLoading(false);
   };
 
   const handleChange = (
@@ -119,6 +131,7 @@ const MembershipPlans: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const payload = { ...form, service };
@@ -129,7 +142,7 @@ const MembershipPlans: React.FC = () => {
       payload.ip = ipData.ip;
 
       const res = await fetch(
-        "https://script.google.com/macros/s/AKfycbzsDGh_MpTI5ckJ4FB0A15Min2wZXGqgynBB7kHGgTIqCU5kVDnT0sLudbwShubeJTWuQ/exec", // replace with your script URL
+        "https://script.google.com/macros/s/AKfycbzsDGh_MpTI5ckJ4FB0A15Min2wZXGqgynBB7kHGgTIqCU5kVDnT0sLudbwShubeJTWuQ/exec",
         {
           method: "POST",
           body: JSON.stringify(payload),
@@ -143,9 +156,11 @@ const MembershipPlans: React.FC = () => {
         closeModal();
       } else {
         alert("Error submitting: " + data.message);
+        setLoading(false);
       }
     } catch (err) {
       alert("Submission failed: " + err);
+      setLoading(false);
     }
   };
 
@@ -153,7 +168,6 @@ const MembershipPlans: React.FC = () => {
     <>
       <section className="bg-gray-50 py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Heading */}
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold text-gray-900">
               Trading Membership Plans
@@ -164,7 +178,6 @@ const MembershipPlans: React.FC = () => {
             </p>
           </div>
 
-          {/* Plans */}
           <div className="grid gap-8 mt-14 sm:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan, index) => (
               <div
@@ -217,7 +230,6 @@ const MembershipPlans: React.FC = () => {
         </div>
       </section>
 
-      {/* Modal */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
           <div className="w-full max-w-lg rounded-2xl bg-white p-6">
@@ -283,14 +295,18 @@ const MembershipPlans: React.FC = () => {
                   type="button"
                   onClick={closeModal}
                   className="w-full rounded-xl border py-2 text-sm"
+                  disabled={loading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-blue-600 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+                  className={`w-full rounded-xl bg-blue-600 py-2 text-sm font-semibold text-white hover:bg-blue-700 ${
+                    loading ? "cursor-not-allowed opacity-70" : ""
+                  }`}
+                  disabled={loading}
                 >
-                  Submit Enquiry
+                  {loading ? `Sending${".".repeat(dotCount)}` : "Submit Enquiry"}
                 </button>
               </div>
             </form>

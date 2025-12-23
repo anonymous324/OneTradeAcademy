@@ -254,7 +254,7 @@ const MembershipPlans: React.FC = () => {
 
               <textarea
                 name="experience"
-                placeholder="Trading Experience (optional)"
+                placeholder="Any Message Want To Share"
                 onChange={handleChange}
                 value={form.experience}
                 className="w-full rounded-lg border px-4 py-2 text-sm"

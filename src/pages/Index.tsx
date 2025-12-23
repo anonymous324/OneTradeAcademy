@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";
 import ContactSection from "@/components/landing/ContactSection";
 import Footer from "@/components/landing/Footer";
+import MembershipPlans from "@/components/landing/MembershipPlans";
 
 const Index = () => {
   return (
@@ -34,6 +35,7 @@ const Index = () => {
           <AboutSection />
           <ProcessSection />
           <ServicesSection />
+          <MembershipPlans />
           <EducationSection />
           <CommunitySection />
           <TestimonialsSection />

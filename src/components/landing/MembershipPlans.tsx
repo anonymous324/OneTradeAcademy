@@ -87,7 +87,6 @@ const plans: Plan[] = [
 const MembershipPlans: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [service, setService] = useState("");
-
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -118,25 +117,43 @@ const MembershipPlans: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = {
-      service,
-      ...form,
-      timestamp: new Date().toISOString(),
-    };
+    try {
+      const payload = { ...form, service };
 
-    console.log("Submitted Data:", payload);
+      // Fetch client IP
+      const ipRes = await fetch("https://api.ipify.org?format=json");
+      const ipData = await ipRes.json();
+      payload.ip = ipData.ip;
 
-    // 👉 Connect here: API / PHP / Google Script / Firebase
-    closeModal();
+      const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbzsDGh_MpTI5ckJ4FB0A15Min2wZXGqgynBB7kHGgTIqCU5kVDnT0sLudbwShubeJTWuQ/exec", // replace with your script URL
+        {
+          method: "POST",
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.status === "success") {
+        alert("Enquiry submitted successfully!");
+        closeModal();
+      } else {
+        alert("Error submitting: " + data.message);
+      }
+    } catch (err) {
+      alert("Submission failed: " + err);
+    }
   };
 
   return (
     <>
       <section className="bg-gray-50 py-16 px-4">
         <div className="max-w-7xl mx-auto">
+          {/* Heading */}
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold text-gray-900">
               Trading Membership Plans
@@ -147,6 +164,7 @@ const MembershipPlans: React.FC = () => {
             </p>
           </div>
 
+          {/* Plans */}
           <div className="grid gap-8 mt-14 sm:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan, index) => (
               <div
@@ -199,7 +217,7 @@ const MembershipPlans: React.FC = () => {
         </div>
       </section>
 
-      {/* MODAL */}
+      {/* Modal */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
           <div className="w-full max-w-lg rounded-2xl bg-white p-6">
@@ -254,7 +272,7 @@ const MembershipPlans: React.FC = () => {
 
               <textarea
                 name="experience"
-                placeholder="Any Message Want To Share"
+                placeholder="Trading Experience (optional)"
                 onChange={handleChange}
                 value={form.experience}
                 className="w-full rounded-lg border px-4 py-2 text-sm"

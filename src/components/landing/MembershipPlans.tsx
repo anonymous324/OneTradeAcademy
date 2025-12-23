@@ -84,14 +84,24 @@ const plans: Plan[] = [
   },
 ];
 
+type FormType = {
+  name: string;
+  phone: string;
+  email: string;
+  capital: string; // selected range
+  outcome: string; // Gain/Loss
+  experience: string;
+};
+
 const MembershipPlans: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [service, setService] = useState("");
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormType>({
     name: "",
     phone: "",
     email: "",
     capital: "",
+    outcome: "",
     experience: "",
   });
 
@@ -118,13 +128,14 @@ const MembershipPlans: React.FC = () => {
       phone: "",
       email: "",
       capital: "",
+      outcome: "",
       experience: "",
     });
     setLoading(false);
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -134,12 +145,16 @@ const MembershipPlans: React.FC = () => {
     setLoading(true);
 
     try {
-      const payload = { ...form, service };
-
       // Fetch client IP
       const ipRes = await fetch("https://api.ipify.org?format=json");
       const ipData = await ipRes.json();
-      payload.ip = ipData.ip;
+
+      // Type-safe payload
+      const payload: FormType & { service: string; ip: string } = {
+        ...form,
+        service,
+        ip: ipData.ip,
+      };
 
       const res = await fetch(
         "https://script.google.com/macros/s/AKfycbzsDGh_MpTI5ckJ4FB0A15Min2wZXGqgynBB7kHGgTIqCU5kVDnT0sLudbwShubeJTWuQ/exec",
@@ -173,8 +188,7 @@ const MembershipPlans: React.FC = () => {
               Trading Membership Plans
             </h1>
             <p className="mt-3 text-gray-600">
-              Educational market insights and structured trade ideas only. No
-              guaranteed returns.
+              Educational market insights and structured trade ideas only. No guaranteed returns.
             </p>
           </div>
 
@@ -273,14 +287,57 @@ const MembershipPlans: React.FC = () => {
                 className="w-full rounded-lg border px-4 py-2 text-sm"
               />
 
-              <input
-                name="capital"
-                placeholder="Approx Trading Capital (₹)"
-                required
-                onChange={handleChange}
-                value={form.capital}
-                className="w-full rounded-lg border px-4 py-2 text-sm"
-              />
+              {/* Capital Range Dropdown */}
+              <div>
+                <label
+                  htmlFor="capital"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Approx Trading Capital (₹)
+                </label>
+                <select
+                  id="capital"
+                  name="capital"
+                  required
+                  onChange={handleChange}
+                  value={form.capital}
+                  className="w-full rounded-lg border px-4 py-2 text-sm bg-white"
+                >
+                  <option value="" disabled>
+                    Select Capital Range
+                  </option>
+                  <option value="₹5,000 - ₹10,000">₹5,000 - ₹10,000</option>
+                  <option value="₹10,001 - ₹20,000">₹10,001 - ₹20,000</option>
+                  <option value="₹20,001 - ₹50,000">₹20,001 - ₹50,000</option>
+                  <option value="₹50,001 - ₹1,00,000">₹50,001 - ₹1,00,000</option>
+                  <option value="₹1,00,001 - ₹2,00,000">₹1,00,001 - ₹2,00,000</option>
+                  <option value="₹2,00,001+">₹2,00,001+</option>
+                </select>
+              </div>
+
+              {/* Gain/Loss Outcome Dropdown */}
+              <div>
+                <label
+                  htmlFor="outcome"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Capital Outcome
+                </label>
+                <select
+                  id="outcome"
+                  name="outcome"
+                  required
+                  onChange={handleChange}
+                  value={form.outcome}
+                  className="w-full rounded-lg border px-4 py-2 text-sm bg-white"
+                >
+                  <option value="" disabled>
+                    Select Outcome
+                  </option>
+                  <option value="Gain Happened">Gain Happened</option>
+                  <option value="Loss Happened">Loss Happened</option>
+                </select>
+              </div>
 
               <textarea
                 name="experience"
